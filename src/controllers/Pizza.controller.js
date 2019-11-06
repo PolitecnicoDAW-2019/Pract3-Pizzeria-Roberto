@@ -4,7 +4,9 @@ class PizzaController {
     this.pizzaService = pizzaService;
     this.shoppingCartService = shoppingCartService;
 
-    this.view.createPreconfiguredPizzas(this.handlerLoadPreconfiguredPizzas);
+    this.view.bindCreatePreconfiguredPizzas(
+      this.handlerLoadPreconfiguredPizzas
+    );
   }
 
   handlerLoadPreconfiguredPizzas = path =>
