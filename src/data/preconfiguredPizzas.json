@@ -1,5 +1,5 @@
 {
-  "bolognesa": {
+  "Bolognesa": {
     "price": {
       "small": 7,
       "medium": 10,
@@ -7,7 +7,7 @@
     },
     "image": "/src/assets/images/bolognesa.png"
   },
-  "chickenBbq": {
+  "ChickenBbq": {
     "price": {
       "small": 7,
       "medium": 10,
