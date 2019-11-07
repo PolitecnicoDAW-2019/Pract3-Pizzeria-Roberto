@@ -12,12 +12,12 @@ class PizzaView {
   };
 
   pizzaJsonToHTML = pizzaJson => {
-    return Object.entries(pizzaJson).reduce((fatherElement, [name, prices]) => {
+    return Object.entries(pizzaJson).reduce((fatherElement, [name, { price, image }]) => {
       const pizzaElement = document.createElement('div');
       pizzaElement.className = 'preconfiguratedPizza';
       const nameElement = document.createElement('h2');
       nameElement.innerText = name;
-      const buttonElements = this.createPriceButtons(prices);
+      const buttonElements = this.createPriceButtons(price);
 
       pizzaElement.appendChild(nameElement);
       pizzaElement.appendChild(buttonElements);
