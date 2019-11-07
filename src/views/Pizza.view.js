@@ -6,6 +6,7 @@ class PizzaView {
   bindCreatePreconfiguredPizzas = pizzasLoaderHandler => {
     pizzasLoaderHandler(PRECONFIGUREDPIZZAS_PATH).then(pizzas => {
       this.preconfiguredPizzas = pizzas;
+      console.log(pizzas);
       const element = this.pizzaJsonToHTML(pizzas);
       this.DOM.preconfiguredPizzaPanel.innerHTML = element.innerHTML;
     });
@@ -17,8 +18,11 @@ class PizzaView {
       pizzaElement.className = 'preconfiguratedPizza';
       const nameElement = document.createElement('h2');
       nameElement.innerText = name;
+      const imageElement = document.createElement('img');
+      imageElement.src = image;
       const buttonElements = this.createPriceButtons(price);
 
+      pizzaElement.appendChild(imageElement);
       pizzaElement.appendChild(nameElement);
       pizzaElement.appendChild(buttonElements);
       fatherElement.appendChild(pizzaElement);
