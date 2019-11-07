@@ -1,12 +1,18 @@
 {
-  "margarita": {
-    "small": 7,
-    "medium": 10,
-    "large": 13
+  "bolognesa": {
+    "price": {
+      "small": 7,
+      "medium": 10,
+      "large": 13
+    },
+    "image": "/src/assets/images/bolognesa.png"
   },
-  "prosciutto": {
-    "small": 7,
-    "medium": 10,
-    "large": 13
+  "chickenBbq": {
+    "price": {
+      "small": 7,
+      "medium": 10,
+      "large": 13
+    },
+    "image": "/src/assets/images/chickenBbq.png"
   }
 }
