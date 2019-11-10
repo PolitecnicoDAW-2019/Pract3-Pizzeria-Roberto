@@ -1,4 +1,6 @@
 .preconfiguratedPizza {
   display: inline-block;
   margin-left: 1em;
+  text-align: center;
+  border: 1px solid black;
 }
