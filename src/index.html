@@ -8,9 +8,18 @@
     <link rel="stylesheet" type="text/css" href="./assets/style.css" />
   </head>
   <body>
-    <div id="preconfiguredPizzasPanel"></div>
+    <div id="preconfiguredPizzasPanel" style="border: 2px solid red;"></div>
+    <div style="border: 2px solid green;">
+      <h3>Shopping Cart</h3>
+      <div id="shoppingCartPanel">
+        <div></div>
+        <!-- Delete ??? -->
+      </div>
+    </div>
+    <div id="customPizzasPanel"></div>
   </body>
   <script src="./data/constants.js"></script>
+  <script src="./models/Ingredient.model.js"></script>
   <script src="./models/Pizza.model.js"></script>
   <script src="./services/Pizza.service.js"></script>
   <script src="./services/ShoppingCart.service.js"></script>
