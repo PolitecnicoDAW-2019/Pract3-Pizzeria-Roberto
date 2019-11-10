@@ -1,44 +1,115 @@
 class PizzaView {
+  constructor() {
+    this.pizzaExample = new Pizza({
+      name: 'sample',
+      baseSize: 'small',
+      price: 14.4
+    });
+    this.shoppingCart = [this.pizzaExample];
+  }
+
   DOM = {
-    preconfiguredPizzaPanel: document.getElementById('preconfiguredPizzasPanel')
+    preconfiguredPizzaPanel: document.getElementById(
+      'preconfiguredPizzasPanel'
+    ),
+    shoppingCartPanel: document.getElementById('shoppingCartPanel'),
+    customPizzasPanel: document.getElementById('customPizzasPanel'),
+    ingredientList: document.getElementById('ingredient-list')
   };
 
-  bindCreatePreconfiguredPizzas = pizzasLoaderHandler => {
-    pizzasLoaderHandler(PRECONFIGUREDPIZZAS_PATH).then(pizzas => {
-      this.preconfiguredPizzas = pizzas;
-      console.log(pizzas);
+  bindLoadJson = handler => {
+    handler(PRECONFIGUREDPIZZAS_PATH).then(json => {
+      const pizzas = this.jsonToPizzaModel(json);
       const element = this.pizzaJsonToHTML(pizzas);
-      this.DOM.preconfiguredPizzaPanel.innerHTML = element.innerHTML;
+
+      for (const pizzaElement of element) {
+        this.DOM.preconfiguredPizzaPanel.appendChild(pizzaElement);
+      }
+    });
+
+    handler(INGREDIENTS_PATH).then(json => {
+      console.log(json);
+      this.ingredients = json;
+      this.ingredientsJsonToInputs(json);
     });
   };
 
-  pizzaJsonToHTML = pizzaJson => {
-    return Object.entries(pizzaJson).reduce((fatherElement, [name, { price, image }]) => {
+  ingredientsJsonToInputs = ingredients => {
+    for (const ingredient of Object.entries(ingredients)) {
+      console.log(ingredient);
+      const inputElement = document.createElement('input');
+      inputElement.type = 'radio';
+      inputElement.name = 'ingredient';
+      this.DOM.ingredientList.appendChild(inputElement);
+    }
+  };
+
+  bindJsonToPizzaModel = handler => {
+    this.jsonToPizzaModel = json => handler(json);
+  };
+
+  bindAddPizzaToShoppingCart = handler => {
+    this.addPizzaToShoppingCart = pizza => {
+      handler(pizza, this.shoppingCart);
+      this.updateShoppingCart();
+    };
+  };
+  // Merge this two methods into one?
+  bindDeletePizzaFromShoppingCart = handler => {
+    this.deletePizzaFromShoppingCart = pizza => {
+      handler(pizza, this.shoppingCart);
+      this.updateShoppingCart();
+    };
+  };
+
+  pizzaJsonToHTML = pizzas => {
+    return pizzas.map(pizzaByName => {
       const pizzaElement = document.createElement('div');
       pizzaElement.className = 'preconfiguratedPizza';
-      const nameElement = document.createElement('h2');
-      nameElement.innerText = name;
-      const imageElement = document.createElement('img');
-      imageElement.src = image;
-      const buttonElements = this.createPriceButtons(price);
 
-      pizzaElement.appendChild(imageElement);
+      const pizzaTemplate = pizzaByName[0];
+
+      const nameElement = document.createElement('h2');
+      nameElement.innerText = pizzaTemplate.name;
+      const imageElement = document.createElement('img');
+      imageElement.src = pizzaTemplate.image;
+
+      const buttonpanel = this.createPreconfiguredPizzaButtons(pizzaByName);
+
       pizzaElement.appendChild(nameElement);
-      pizzaElement.appendChild(buttonElements);
-      fatherElement.appendChild(pizzaElement);
-      return fatherElement;
+      pizzaElement.appendChild(imageElement);
+      pizzaElement.appendChild(buttonpanel);
+      return pizzaElement;
+    });
+  };
+
+  createPreconfiguredPizzaButtons = pizzaByName => {
+    return pizzaByName.reduce((father, pizza) => {
+      const button = document.createElement('button');
+      button.innerHTML = `${pizza.baseSize} <br> ${pizza.price}€`;
+      button.onclick = () => this.addPizzaToShoppingCart(pizza);
+
+      father.appendChild(button);
+      return father;
     }, document.createElement('div'));
   };
 
-  createPriceButtons = prices => {
-    return Object.entries(prices).reduce((fatherElement, [size, price]) => {
-      const buttonElement = document.createElement('button');
-      buttonElement.value = `${size}-${price}`;
-      buttonElement.innerHTML = `${size}<br>${price}€`;
-      //buttonElement.onclick //TODO function to add pizza to the shopping cart
+  updateShoppingCart = () => {
+    this.DOM.shoppingCartPanel.innerHTML = '';
+    for (const pizza of this.shoppingCart) {
+      const child = document.createElement('div');
+      const spanName = document.createElement('span');
+      spanName.textContent = `${pizza.name} - ${pizza.baseSize} x `;
+      const spanAmount = document.createElement('span');
+      spanAmount.textContent = pizza.amount;
+      const buttonDelete = document.createElement('button');
+      buttonDelete.textContent = 'Delete';
+      buttonDelete.onclick = () => this.deletePizzaFromShoppingCart(pizza);
 
-      fatherElement.appendChild(buttonElement);
-      return fatherElement;
-    }, document.createElement('div'));
+      child.appendChild(spanName);
+      child.appendChild(spanAmount);
+      child.appendChild(buttonDelete);
+      this.DOM.shoppingCartPanel.appendChild(child);
+    }
   };
 }
