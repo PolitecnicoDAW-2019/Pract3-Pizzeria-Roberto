@@ -8,8 +8,6 @@ class Pizza {
     this.ingredients = ingredients;
   }
 
-  toString = () => `${this.name}-${this.baseSize}-${this.price}`;
-
   calculatePrice = () => {
     //test this
     this.price = this.ingredients.reduce((totalPrice, ingredientPrice) => {
