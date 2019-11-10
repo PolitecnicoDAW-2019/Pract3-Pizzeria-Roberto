@@ -1,26 +1,29 @@
-{
-  "Margherita": {
-    "price": {
+[
+  {
+    "name": "Margherita",
+    "prices": {
       "small": 4,
       "medium": 5.5,
       "large": 6.7
     },
     "image": "/src/assets/images/margherita.png"
   },
-  "ChickenBbq": {
-    "price": {
+  {
+    "name": "ChickenBbq",
+    "prices": {
       "small": 5.1,
       "medium": 7.3,
       "large": 10.2
     },
     "image": "/src/assets/images/chickenBbq.png"
   },
-  "Carbonara": {
-    "price": {
+  {
+    "name": "Carbonara",
+    "prices": {
       "small": 5.2,
       "medium": 6.15,
       "large": 8.8
     },
     "image": "/src/assets/images/carbonara.png"
   }
-}
+]
