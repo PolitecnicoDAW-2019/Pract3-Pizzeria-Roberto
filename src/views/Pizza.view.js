@@ -22,7 +22,7 @@ class PizzaView {
   bindLoadJson = handler => {
     handler(PRECONFIGUREDPIZZAS_PATH).then(json => {
       const pizzas = this.jsonToPizzaModel(json);
-      const element = this.pizzaJsonToHTML(pizzas);
+      const element = this.pizzasModelToHTML(pizzas);
 
       for (const pizzaElement of element) {
         this.DOM.preconfiguredPizzaPanel.appendChild(pizzaElement);
@@ -32,11 +32,11 @@ class PizzaView {
     handler(INGREDIENTS_PATH).then(json => {
       console.log(json);
       this.ingredients = this.jsonToIngredientModel(json);
-      this.ingredientsJsonToInputs(json);
+      this.ingredientsModelToHTML(json);
     });
   };
 
-  ingredientsJsonToInputs = ingredients => {
+  ingredientsModelToHTML = ingredients => {
     for (const ingredient of Object.entries(ingredients)) {
       console.log(ingredient);
       /*const inputElement = document.createElement('input');
@@ -77,7 +77,7 @@ class PizzaView {
     this.updateShoppingCart(); // I call the function here to show the total price on startup
   };
 
-  pizzaJsonToHTML = pizzas => {
+  pizzasModelToHTML = pizzas => {
     return pizzas.map(pizzaByName => {
       const pizzaElement = document.createElement('div');
       pizzaElement.className = 'preconfiguratedPizza';
