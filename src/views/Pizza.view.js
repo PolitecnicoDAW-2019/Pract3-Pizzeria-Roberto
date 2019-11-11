@@ -6,15 +6,20 @@ class PizzaView {
       price: 14.4
     });
     this.shoppingCart = [this.pizzaExample];
+    this.DOM.clearShoppingCart.onclick = this.clearShoppingCart;
   }
 
   DOM = {
-    preconfiguredPizzaPanel: document.getElementById(
-      'preconfiguredPizzasPanel'
-    ),
+    preconfiguredPizzaPanel: document.getElementById('preconfiguredPizzasPanel'),
     shoppingCartPanel: document.getElementById('shoppingCartPanel'),
     customPizzasPanel: document.getElementById('customPizzasPanel'),
-    ingredientList: document.getElementById('ingredient-list')
+    ingredientList: document.getElementById('ingredient-list'),
+    clearShoppingCart: document.getElementById('clearShoppingCart')
+  };
+
+  clearShoppingCart = () => {
+    this.DOM.shoppingCartPanel.innerHTML = '';
+    this.shoppingCart = [];
   };
 
   bindLoadJson = handler => {
@@ -37,10 +42,14 @@ class PizzaView {
   ingredientsJsonToInputs = ingredients => {
     for (const ingredient of Object.entries(ingredients)) {
       console.log(ingredient);
-      const inputElement = document.createElement('input');
+      /*const inputElement = document.createElement('input');
       inputElement.type = 'radio';
-      inputElement.name = 'ingredient';
-      this.DOM.ingredientList.appendChild(inputElement);
+      inputElement.name = 'ingredient';*/
+
+      const element = document.createElement('div');
+      //continue here
+
+      this.DOM.ingredientList.appendChild(element);
     }
   };
 
@@ -60,6 +69,10 @@ class PizzaView {
       handler(pizza, this.shoppingCart);
       this.updateShoppingCart();
     };
+  };
+
+  bindCalculateTotalPrice = handler => {
+    this.calculateTotalPrice = shoppingCart => handler(shoppingCart);
   };
 
   pizzaJsonToHTML = pizzas => {
@@ -99,7 +112,7 @@ class PizzaView {
     for (const pizza of this.shoppingCart) {
       const child = document.createElement('div');
       const spanName = document.createElement('span');
-      spanName.textContent = `${pizza.name} - ${pizza.baseSize} x `;
+      spanName.textContent = `${pizza.name} - ${pizza.baseSize} ${pizza.price}€ x `;
       const spanAmount = document.createElement('span');
       spanAmount.textContent = pizza.amount;
       const buttonDelete = document.createElement('button');
@@ -111,5 +124,9 @@ class PizzaView {
       child.appendChild(buttonDelete);
       this.DOM.shoppingCartPanel.appendChild(child);
     }
+
+    const totalPrice = document.createElement('div');
+    totalPrice.textContent = this.calculateTotalPrice(this.shoppingCart) + '€';
+    this.DOM.shoppingCartPanel.appendChild(totalPrice);
   };
 }
