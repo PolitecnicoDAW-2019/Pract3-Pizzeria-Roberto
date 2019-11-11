@@ -13,4 +13,4 @@
 - [x] Create individual price of each pizza
 - [x] Create "Clear shopping cart" button
 - [ ] Create Ingredient list
-- [ ] Parse json to ingredient model
+- [x] Parse json to ingredient model
