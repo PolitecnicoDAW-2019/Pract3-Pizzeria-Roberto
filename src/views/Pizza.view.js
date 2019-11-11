@@ -1,16 +1,13 @@
 class PizzaView {
   constructor() {
-    this.pizzaExample = new Pizza({
-      name: 'sample',
-      baseSize: 'small',
-      price: 14.4
-    });
-    this.shoppingCart = [this.pizzaExample];
+    this.shoppingCart = [];
     this.DOM.clearShoppingCart.onclick = this.clearShoppingCart;
   }
 
   DOM = {
-    preconfiguredPizzaPanel: document.getElementById('preconfiguredPizzasPanel'),
+    preconfiguredPizzaPanel: document.getElementById(
+      'preconfiguredPizzasPanel'
+    ),
     shoppingCartPanel: document.getElementById('shoppingCartPanel'),
     customPizzasPanel: document.getElementById('customPizzasPanel'),
     ingredientList: document.getElementById('ingredient-list'),
@@ -34,7 +31,7 @@ class PizzaView {
 
     handler(INGREDIENTS_PATH).then(json => {
       console.log(json);
-      this.ingredients = json;
+      this.ingredients = this.jsonToIngredientModel(json);
       this.ingredientsJsonToInputs(json);
     });
   };
@@ -57,6 +54,10 @@ class PizzaView {
     this.jsonToPizzaModel = json => handler(json);
   };
 
+  bindJsonToIngredientModel = handler => {
+    this.jsonToIngredientModel = json => handler(json);
+  };
+
   bindAddPizzaToShoppingCart = handler => {
     this.addPizzaToShoppingCart = pizza => {
       handler(pizza, this.shoppingCart);
@@ -73,6 +74,7 @@ class PizzaView {
 
   bindCalculateTotalPrice = handler => {
     this.calculateTotalPrice = shoppingCart => handler(shoppingCart);
+    this.updateShoppingCart(); // I call the function here to show the total price on startup
   };
 
   pizzaJsonToHTML = pizzas => {
@@ -126,7 +128,9 @@ class PizzaView {
     }
 
     const totalPrice = document.createElement('div');
-    totalPrice.textContent = this.calculateTotalPrice(this.shoppingCart) + '€';
+    totalPrice.textContent = `TOTAL TO PAY: ${this.calculateTotalPrice(
+      this.shoppingCart
+    )}€`;
     this.DOM.shoppingCartPanel.appendChild(totalPrice);
   };
 }
