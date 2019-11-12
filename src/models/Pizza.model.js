@@ -1,5 +1,5 @@
 class Pizza {
-  constructor({ name, baseSize, image = '', price = 0, ingredients = {} }) {
+  constructor({ name, baseSize, image = '', price = 3, ingredients = {} }) {
     this.name = name;
     this.baseSize = baseSize;
     this.image = image;
