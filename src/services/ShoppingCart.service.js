@@ -1,17 +1,17 @@
 class ShoppingCartService {
   deletePizzaFromShoppingCart = (pizza, shoppingCart) => {
-    const found = this.pizzaInShoppingCart(pizza, shoppingCart);
+    const found = this.findPizzaInShoppingCart(pizza, shoppingCart);
     found.amount > 1
       ? found.amount--
       : shoppingCart.splice(shoppingCart.indexOf(found), 1);
   };
 
   addPizzaToShoppingCart = (pizza, shoppingCart) => {
-    const found = this.pizzaInShoppingCart(pizza, shoppingCart);
+    const found = this.findPizzaInShoppingCart(pizza, shoppingCart);
     found ? found.amount++ : shoppingCart.push(pizza);
   };
 
-  pizzaInShoppingCart = (pizza, shoppingCart) => {
+  findPizzaInShoppingCart = (pizza, shoppingCart) => {
     return shoppingCart.find(pizzita => {
       const tempPizza = { ...pizzita };
       const tempPizzaOriginal = { ...pizza };
