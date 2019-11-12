@@ -12,5 +12,8 @@
 - [x] Create totalPrice in shopping cart
 - [x] Create individual price of each pizza
 - [x] Create "Clear shopping cart" button
-- [ ] Create Ingredient list
-- [x] Parse json to ingredient model
+- [x] Create Ingredient list
+- [ ] Create clear Pizza
+- [ ] Allow user to give a name to the pizza
+- [ ] Move total price outside of the list to avoid it from being erased
+- [ ] Enum of deleting and adding ingredients to pizza list
