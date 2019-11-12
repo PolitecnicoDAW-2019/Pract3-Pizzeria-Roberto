@@ -18,11 +18,23 @@
       </div>
     </div>
     <div id="customPizzasPanel" style="border: 2px solid blue;">
-      <div id="ingredient-list"></div>
+      <div>
+        <h4>Ingredients</h4>
+        <div
+          id="ingredient-list"
+          style="border: 1px solid black; width: fit-content;"
+        ></div>
+      </div>
+      <div>
+        <h4>Your pizza</h4>
+        <div
+          id="pizza-ingredients"
+          style="border: 1px solid black; width: fit-content;"
+        ></div>
+      </div>
     </div>
   </body>
   <script src="./data/constants.js"></script>
-  <script src="./models/Ingredient.model.js"></script>
   <script src="./models/Pizza.model.js"></script>
   <script src="./services/Pizza.service.js"></script>
   <script src="./services/ShoppingCart.service.js"></script>
