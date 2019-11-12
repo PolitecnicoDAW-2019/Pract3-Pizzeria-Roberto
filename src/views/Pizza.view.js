@@ -2,6 +2,8 @@ class PizzaView {
   constructor() {
     this.shoppingCart = [];
     this.DOM.clearShoppingCart.onclick = this.clearShoppingCart;
+    this.DOM.addCustomPizzaButton.onclick = () =>
+      this.addPizzaToShoppingCart(this.pizza);
     this.pizza = new Pizza({ name: 'default', baseSize: Sizes.small });
   }
 
@@ -13,7 +15,9 @@ class PizzaView {
     customPizzasPanel: document.getElementById('customPizzasPanel'),
     ingredientList: document.getElementById('ingredient-list'),
     pizzaIngredients: document.getElementById('pizza-ingredients'),
-    clearShoppingCart: document.getElementById('clearShoppingCart')
+    clearShoppingCart: document.getElementById('clearShoppingCart'),
+    addCustomPizzaButton: document.getElementById('addCustomPizzaButton'),
+    pizzaSizaSelect: document.getElementById('pizzaSizaSelect')
   };
 
   clearShoppingCart = () => {
