@@ -2,6 +2,7 @@ class PizzaView {
   constructor() {
     this.shoppingCart = [];
     this.DOM.clearShoppingCart.onclick = this.clearShoppingCart;
+    this.pizza = new Pizza({ name: 'default', baseSize: Sizes.small });
   }
 
   DOM = {
@@ -11,6 +12,7 @@ class PizzaView {
     shoppingCartPanel: document.getElementById('shoppingCartPanel'),
     customPizzasPanel: document.getElementById('customPizzasPanel'),
     ingredientList: document.getElementById('ingredient-list'),
+    pizzaIngredients: document.getElementById('pizza-ingredients'),
     clearShoppingCart: document.getElementById('clearShoppingCart')
   };
 
@@ -30,24 +32,57 @@ class PizzaView {
     });
 
     handler(INGREDIENTS_PATH).then(json => {
-      console.log(json);
-      this.ingredients = this.jsonToIngredientModel(json);
-      this.ingredientsModelToHTML(json);
+      this.ingredientsToHTML(json);
     });
   };
 
-  ingredientsModelToHTML = ingredients => {
-    for (const ingredient of Object.entries(ingredients)) {
-      console.log(ingredient);
-      /*const inputElement = document.createElement('input');
-      inputElement.type = 'radio';
-      inputElement.name = 'ingredient';*/
+  ingredientsToHTML = ingredients => {
+    console.log(Object.entries(ingredients));
+    for (const [name, price] of Object.entries(ingredients)) {
+      const ingredientElement = document.createElement('div');
+      ingredientElement.textContent = name;
+      ingredientElement.onclick = () => {
+        this.managePizzaIngrendients(name, price, ingredientElement, 'add');
+        this.moveIngredientFromList(ingredientElement);
+      };
 
-      const element = document.createElement('div');
-      //continue here
-
-      this.DOM.ingredientList.appendChild(element);
+      this.DOM.ingredientList.appendChild(ingredientElement);
     }
+  };
+
+  moveIngredientFromList = element => {
+    const list = element.parentElement;
+    const destinyList = {
+      [this.DOM.ingredientList.id]: this.DOM.pizzaIngredients,
+      [this.DOM.pizzaIngredients.id]: this.DOM.ingredientList
+    }[list.id];
+    list.removeChild(element);
+    destinyList.appendChild(element);
+  };
+
+  managePizzaIngrendients = (name, price, element, selectedOperation) => {
+    const operations = {
+      add: {
+        option: 'delete',
+        operation: () => (this.pizza.ingredients[name] = price)
+      },
+      delete: {
+        option: 'add',
+        operation: () => delete this.pizza.ingredients[name]
+      }
+    };
+
+    element.onclick = () => {
+      this.managePizzaIngrendients(
+        name,
+        price,
+        element,
+        operations[selectedOperation].option
+      );
+      this.moveIngredientFromList(element);
+    };
+
+    operations[selectedOperation].operation();
   };
 
   bindJsonToPizzaModel = handler => {
@@ -83,7 +118,6 @@ class PizzaView {
       pizzaElement.className = 'preconfiguratedPizza';
 
       const pizzaTemplate = pizzaByName[0];
-
       const nameElement = document.createElement('h2');
       nameElement.innerText = pizzaTemplate.name;
       const imageElement = document.createElement('img');
