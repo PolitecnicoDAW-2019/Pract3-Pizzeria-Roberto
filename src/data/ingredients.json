@@ -1,22 +1,7 @@
 {
-  "lettuce": {
-    "basePrice": 0.25,
-    "size": { "small": 1, "medium": 1.2, "large": 1.4 }
-  },
-  "tomatoSauce": {
-    "basePrice": 0.3,
-    "size": { "small": 1, "medium": 1.4, "large": 1.8 }
-  },
-  "onion": {
-    "basePrice": 0.43,
-    "size": { "small": 1, "medium": 1.3, "large": 2.1 }
-  },
-  "cheese": {
-    "basePrice": 0.1,
-    "size": { "small": 1, "medium": 1.3, "large": 2.3 }
-  },
-  "mushroom": {
-    "basePrice": 0.39,
-    "size": { "small": 1, "medium": 1.11, "large": 1.17 }
-  }
+  "Lettuce": 0.25,
+  "TomatoSauce": 0.3,
+  "Onion": 0.43,
+  "Cheese": 0.1,
+  "Mushroom": 0.39
 }
