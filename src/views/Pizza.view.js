@@ -39,7 +39,8 @@ class PizzaView {
     pizzaSizeSelect: document.getElementById('pizzaSizeSelect'),
     customPizzaPrice: document.getElementById('customPizzaPrice'),
     clearPizzaButton: document.getElementById('clearPizzaButton'),
-    pizzaNameInput: document.getElementById('pizzaNameInput')
+    pizzaNameInput: document.getElementById('pizzaNameInput'),
+    totalPriceShoppingCart: document.getElementById('totalPriceShoppingCart')
   };
 
   clearShoppingCart = () => {
@@ -213,11 +214,8 @@ class PizzaView {
       child.appendChild(buttonDelete);
       this.DOM.shoppingCartPanel.appendChild(child);
     }
-
-    const totalPrice = document.createElement('div');
-    totalPrice.textContent = `TOTAL TO PAY: ${this.calculateTotalPrice(
+    this.DOM.totalPriceShoppingCart.textContent = `TOTAL TO PAY: ${this.calculateTotalPrice(
       this.shoppingCart
     )}€`;
-    this.DOM.shoppingCartPanel.appendChild(totalPrice);
   };
 }
