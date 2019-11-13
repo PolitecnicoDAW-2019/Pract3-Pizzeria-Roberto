@@ -4,3 +4,7 @@
   text-align: center;
   border: 1px solid black;
 }
+
+.preconfiguratedPizza > img {
+  width: 80%;
+}
