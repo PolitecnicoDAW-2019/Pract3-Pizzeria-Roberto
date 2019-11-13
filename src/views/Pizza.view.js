@@ -86,7 +86,12 @@ class PizzaView {
       const ingredientElement = document.createElement('div');
       ingredientElement.textContent = `${name} ${price}€`;
       ingredientElement.onclick = () => {
-        this.managePizzaIngrendients(name, price, ingredientElement, 'add');
+        this.managePizzaIngrendients(
+          name,
+          price,
+          ingredientElement,
+          Operations.add
+        );
         this.moveIngredientFromList(ingredientElement);
       };
 
@@ -112,11 +117,11 @@ class PizzaView {
   managePizzaIngrendients = (name, price, element, selectedOperation) => {
     const operations = {
       add: {
-        option: 'delete',
+        option: Operations.delete,
         operation: () => (this.pizza.ingredients[name] = price)
       },
       delete: {
-        option: 'add',
+        option: Operations.add,
         operation: () => delete this.pizza.ingredients[name]
       }
     };
