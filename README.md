@@ -4,7 +4,6 @@
 
 - [x] Parse preconfigured pizzas to pizza model
 - [ ] Recheck pizzaModelToHTML and try to improve the code
-- [ ] Change reduce to for...of (¿ don't remember what I wanted to mean here)
 - [x] Add Pizzas to shopping cart
 - [x] Remove Pizzas from shopping cart
 - [x] Create Ingredients.json
@@ -13,9 +12,13 @@
 - [x] Create individual price of each pizza
 - [x] Create "Clear shopping cart" button
 - [x] Create Ingredient list
-- [ ] Create clear Pizza
+- [x] Create clear Pizza
 - [x] Select of pizza size
 - [x] Adding custom pizzas to shopping cart
-- [ ] Allow user to give a name to the pizza
-- [ ] Move total price outside of the list to avoid it from being erased
-- [ ] Enum of deleting and adding ingredients to pizza list
+- [x] Allow user to give a name to the pizza
+- [x] Move total price outside of the list to avoid it from being erased
+- [x] Use Enum each time that I use the "selectedValue"
+- [x] Enum of deleting and adding ingredients to pizza list
+- [ ] Compare to of Pizza Object (?) // thx Alex
+- [ ] Divide Pizza.view.DOM
+- [ ] Improve CSS
