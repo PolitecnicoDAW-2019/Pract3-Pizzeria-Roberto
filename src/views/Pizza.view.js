@@ -4,9 +4,24 @@ class PizzaView {
     this.DOM.clearShoppingCart.onclick = this.clearShoppingCart;
     this.DOM.addCustomPizzaButton.onclick = () =>
       this.addPizzaToShoppingCart(new Pizza({ ...this.pizza }));
-    this.pizza = new Pizza({ name: 'default', baseSize: Sizes.small });
-    this.DOM.pizzaSizeSelect.addEventListener('change', this.changePizzaSize);
+    this.DOM.clearPizzaButton.onclick = this.clearPizza;
+    this.DOM.pizzaSizeSelect.onchange = this.changePizzaSize;
+
+    // Creating the default customized pizza
+    this.pizza = new Pizza({
+      name: 'default',
+      baseSize: this.getPizzaSizeFromSelect()
+    });
   }
+
+  clearPizza = () => {
+    this.pizza = new Pizza({
+      name: 'default',
+      baseSize: this.getPizzaSizeFromSelect()
+    });
+    this.clearIngredientsLists();
+    this.ingredientsToHTML(this.ingredients);
+  };
 
   DOM = {
     preconfiguredPizzaPanel: document.getElementById(
@@ -19,7 +34,8 @@ class PizzaView {
     clearShoppingCart: document.getElementById('clearShoppingCart'),
     addCustomPizzaButton: document.getElementById('addCustomPizzaButton'),
     pizzaSizeSelect: document.getElementById('pizzaSizeSelect'),
-    customPizzaPrice: document.getElementById('customPizzaPrice')
+    customPizzaPrice: document.getElementById('customPizzaPrice'),
+    clearPizzaButton: document.getElementById('clearPizzaButton')
   };
 
   clearShoppingCart = () => {
@@ -28,11 +44,15 @@ class PizzaView {
   };
 
   changePizzaSize = () => {
-    const selectOptions = event.target.options;
-    const selectedOption = selectOptions.selectedIndex;
-    const selectedValue = selectOptions[selectedOption].value;
+    const selectedValue = this.getPizzaSizeFromSelect();
     this.pizza.updatePizzaSize(selectedValue);
     this.updatePizzaPrice();
+  };
+
+  getPizzaSizeFromSelect = () => {
+    const selectOptions = this.DOM.pizzaSizeSelect.options;
+    const selectedOption = selectOptions.selectedIndex;
+    return selectOptions[selectedOption].value;
   };
 
   bindLoadJson = handler => {
@@ -46,12 +66,12 @@ class PizzaView {
     });
 
     handler(INGREDIENTS_PATH).then(json => {
+      this.ingredients = json;
       this.ingredientsToHTML(json);
     });
   };
 
   ingredientsToHTML = ingredients => {
-    console.log(Object.entries(ingredients));
     for (const [name, price] of Object.entries(ingredients)) {
       const ingredientElement = document.createElement('div');
       ingredientElement.textContent = `${name} ${price}€`;
@@ -62,6 +82,11 @@ class PizzaView {
 
       this.DOM.ingredientList.appendChild(ingredientElement);
     }
+  };
+
+  clearIngredientsLists = () => {
+    this.DOM.ingredientList.innerHTML = '';
+    this.DOM.pizzaIngredients.innerHTML = '';
   };
 
   moveIngredientFromList = element => {
