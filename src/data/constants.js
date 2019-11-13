@@ -5,3 +5,7 @@ const Sizes = {
   medium: 'medium',
   large: 'large'
 };
+const Operations = {
+  add: 'add',
+  delete: 'delete'
+};
