@@ -48,7 +48,7 @@ class PizzaView {
   };
 
   changePizzaSize = () => {
-    const selectedValue = this.getPizzaSizeFromSelect();
+    const selectedValue = Sizes[this.getPizzaSizeFromSelect()];
     this.pizza.updatePizzaSize(selectedValue);
     this.updatePizzaPrice();
   };
