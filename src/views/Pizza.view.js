@@ -3,8 +3,9 @@ class PizzaView {
     this.shoppingCart = [];
     this.DOM.clearShoppingCart.onclick = this.clearShoppingCart;
     this.DOM.addCustomPizzaButton.onclick = () =>
-      this.addPizzaToShoppingCart(this.pizza);
+      this.addPizzaToShoppingCart(new Pizza({ ...this.pizza }));
     this.pizza = new Pizza({ name: 'default', baseSize: Sizes.small });
+    this.DOM.pizzaSizeSelect.addEventListener('change', this.changePizzaSize);
   }
 
   DOM = {
@@ -17,12 +18,21 @@ class PizzaView {
     pizzaIngredients: document.getElementById('pizza-ingredients'),
     clearShoppingCart: document.getElementById('clearShoppingCart'),
     addCustomPizzaButton: document.getElementById('addCustomPizzaButton'),
-    pizzaSizaSelect: document.getElementById('pizzaSizaSelect')
+    pizzaSizeSelect: document.getElementById('pizzaSizeSelect'),
+    customPizzaPrice: document.getElementById('customPizzaPrice')
   };
 
   clearShoppingCart = () => {
     this.DOM.shoppingCartPanel.innerHTML = '';
     this.shoppingCart = [];
+  };
+
+  changePizzaSize = () => {
+    const selectOptions = event.target.options;
+    const selectedOption = selectOptions.selectedIndex;
+    const selectedValue = selectOptions[selectedOption].value;
+    this.pizza.updatePizzaSize(selectedValue);
+    this.updatePizzaPrice();
   };
 
   bindLoadJson = handler => {
@@ -44,7 +54,7 @@ class PizzaView {
     console.log(Object.entries(ingredients));
     for (const [name, price] of Object.entries(ingredients)) {
       const ingredientElement = document.createElement('div');
-      ingredientElement.textContent = name;
+      ingredientElement.textContent = `${name} ${price}€`;
       ingredientElement.onclick = () => {
         this.managePizzaIngrendients(name, price, ingredientElement, 'add');
         this.moveIngredientFromList(ingredientElement);
@@ -87,6 +97,7 @@ class PizzaView {
     };
 
     operations[selectedOperation].operation();
+    this.updatePizzaPrice();
   };
 
   bindJsonToPizzaModel = handler => {
@@ -114,6 +125,7 @@ class PizzaView {
   bindCalculateTotalPrice = handler => {
     this.calculateTotalPrice = shoppingCart => handler(shoppingCart);
     this.updateShoppingCart(); // I call the function here to show the total price on startup
+    this.updatePizzaPrice(); // Same
   };
 
   pizzasModelToHTML = pizzas => {
@@ -146,6 +158,9 @@ class PizzaView {
       return father;
     }, document.createElement('div'));
   };
+
+  updatePizzaPrice = () =>
+    (this.DOM.customPizzaPrice.textContent = `Pizza price: ${this.pizza.calculatePrice()}€`);
 
   updateShoppingCart = () => {
     this.DOM.shoppingCartPanel.innerHTML = '';
