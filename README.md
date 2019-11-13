@@ -14,6 +14,8 @@
 - [x] Create "Clear shopping cart" button
 - [x] Create Ingredient list
 - [ ] Create clear Pizza
+- [x] Select of pizza size
+- [x] Adding custom pizzas to shopping cart
 - [ ] Allow user to give a name to the pizza
 - [ ] Move total price outside of the list to avoid it from being erased
 - [ ] Enum of deleting and adding ingredients to pizza list
