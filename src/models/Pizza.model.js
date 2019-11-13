@@ -6,10 +6,10 @@ class Pizza {
     this.price = price;
     this.amount = 1;
     this.ingredients = ingredients;
-    this.multiplier = this.setMultiplier();
+    this.multiplier = this.getMultiplier();
   }
 
-  setMultiplier = () => {
+  getMultiplier = () => {
     const multipliers = {
       small: 1,
       medium: 1.1,
@@ -19,20 +19,30 @@ class Pizza {
     return multipliers[this.baseSize];
   };
 
-  calculatePrice = () => {
-    const totalIngredients = this.ingredients.reduce(
-      (totalPrice, ingredientPrice) => {
-        return totalPrice + this.multiplier * ingredientPrice;
-      },
-      0
-    );
-
+  getBasePrice = () => {
     const basePrices = {
       small: 3,
       medium: 5,
       large: 6
     };
 
-    return totalIngredients + basePrices[this.baseSize];
+    return basePrices[this.baseSize];
+  };
+
+  updatePizzaSize = size => {
+    this.baseSize = size;
+    this.price = this.getBasePrice();
+    this.multiplier = this.getMultiplier();
+  };
+
+  calculatePrice = () => {
+    const totalIngredients = Object.values(this.ingredients).reduce(
+      (totalPrice, ingredientPrice) =>
+        totalPrice + this.multiplier * ingredientPrice,
+      0
+    );
+
+    this.price = totalIngredients + this.getBasePrice(this.baseSize);
+    return this.price.toFixed(2);
   };
 }
