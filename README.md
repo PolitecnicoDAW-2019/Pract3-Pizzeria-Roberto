@@ -22,3 +22,4 @@
 - [ ] Compare to of Pizza Object (?) // thx Alex
 - [ ] Divide Pizza.view.DOM
 - [ ] Improve CSS
+- [ ] Refactor getters/setters 
