@@ -2,10 +2,7 @@ class PizzaView {
   constructor() {
     this.shoppingCart = [];
     this.DOM.clearShoppingCart.onclick = this.clearShoppingCart;
-    this.DOM.addCustomPizzaButton.onclick = () =>
-      this.addPizzaToShoppingCart(
-        new Pizza({ ...this.pizza, name: this.getCustomPizzaName() })
-      );
+    this.DOM.addCustomPizzaButton.onclick = () => this.addPizzaToShoppingCart(new Pizza({ ...this.pizza, name: this.getCustomPizzaName() }));
     this.DOM.clearPizzaButton.onclick = this.clearPizza;
     this.DOM.pizzaSizeSelect.onchange = this.changePizzaSize;
 
@@ -27,9 +24,7 @@ class PizzaView {
   };
 
   DOM = {
-    preconfiguredPizzaPanel: document.getElementById(
-      'preconfiguredPizzasPanel'
-    ),
+    preconfiguredPizzaPanel: document.getElementById('preconfiguredPizzasPanel'),
     shoppingCartPanel: document.getElementById('shoppingCartPanel'),
     customPizzasPanel: document.getElementById('customPizzasPanel'),
     ingredientList: document.getElementById('ingredient-list'),
@@ -86,12 +81,7 @@ class PizzaView {
       const ingredientElement = document.createElement('div');
       ingredientElement.textContent = `${name} ${price}€`;
       ingredientElement.onclick = () => {
-        this.managePizzaIngrendients(
-          name,
-          price,
-          ingredientElement,
-          Operations.add
-        );
+        this.managePizzaIngrendients(name, price, ingredientElement, Operations.add);
         this.moveIngredientFromList(ingredientElement);
       };
 
@@ -127,12 +117,7 @@ class PizzaView {
     };
 
     element.onclick = () => {
-      this.managePizzaIngrendients(
-        name,
-        price,
-        element,
-        operations[selectedOperation].option
-      );
+      this.managePizzaIngrendients(name, price, element, operations[selectedOperation].option);
       this.moveIngredientFromList(element);
     };
 
@@ -142,10 +127,6 @@ class PizzaView {
 
   bindJsonToPizzaModel = handler => {
     this.jsonToPizzaModel = json => handler(json);
-  };
-
-  bindJsonToIngredientModel = handler => {
-    this.jsonToIngredientModel = json => handler(json);
   };
 
   bindAddPizzaToShoppingCart = handler => {
@@ -199,8 +180,7 @@ class PizzaView {
     }, document.createElement('div'));
   };
 
-  updatePizzaPrice = () =>
-    (this.DOM.customPizzaPrice.textContent = `Pizza price: ${this.pizza.calculatePrice()}€`);
+  updatePizzaPrice = () => (this.DOM.customPizzaPrice.textContent = `Pizza price: ${this.pizza.calculatePrice()}€`);
 
   updateShoppingCart = () => {
     this.DOM.shoppingCartPanel.innerHTML = '';
@@ -219,8 +199,6 @@ class PizzaView {
       child.appendChild(buttonDelete);
       this.DOM.shoppingCartPanel.appendChild(child);
     }
-    this.DOM.totalPriceShoppingCart.textContent = `TOTAL TO PAY: ${this.calculateTotalPrice(
-      this.shoppingCart
-    )}€`;
+    this.DOM.totalPriceShoppingCart.textContent = `TOTAL TO PAY: ${this.calculateTotalPrice(this.shoppingCart)}€`;
   };
 }
