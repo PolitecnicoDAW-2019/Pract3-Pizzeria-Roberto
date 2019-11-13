@@ -3,7 +3,9 @@ class PizzaView {
     this.shoppingCart = [];
     this.DOM.clearShoppingCart.onclick = this.clearShoppingCart;
     this.DOM.addCustomPizzaButton.onclick = () =>
-      this.addPizzaToShoppingCart(new Pizza({ ...this.pizza }));
+      this.addPizzaToShoppingCart(
+        new Pizza({ ...this.pizza, name: this.getCustomPizzaName() })
+      );
     this.DOM.clearPizzaButton.onclick = this.clearPizza;
     this.DOM.pizzaSizeSelect.onchange = this.changePizzaSize;
 
@@ -21,6 +23,7 @@ class PizzaView {
     });
     this.clearIngredientsLists();
     this.ingredientsToHTML(this.ingredients);
+    this.DOM.pizzaNameInput.value = '';
   };
 
   DOM = {
@@ -35,7 +38,8 @@ class PizzaView {
     addCustomPizzaButton: document.getElementById('addCustomPizzaButton'),
     pizzaSizeSelect: document.getElementById('pizzaSizeSelect'),
     customPizzaPrice: document.getElementById('customPizzaPrice'),
-    clearPizzaButton: document.getElementById('clearPizzaButton')
+    clearPizzaButton: document.getElementById('clearPizzaButton'),
+    pizzaNameInput: document.getElementById('pizzaNameInput')
   };
 
   clearShoppingCart = () => {
@@ -53,6 +57,11 @@ class PizzaView {
     const selectOptions = this.DOM.pizzaSizeSelect.options;
     const selectedOption = selectOptions.selectedIndex;
     return selectOptions[selectedOption].value;
+  };
+
+  getCustomPizzaName = () => {
+    const name = this.DOM.pizzaNameInput.value.trim();
+    return name ? name : 'Customized Pizza';
   };
 
   bindLoadJson = handler => {
